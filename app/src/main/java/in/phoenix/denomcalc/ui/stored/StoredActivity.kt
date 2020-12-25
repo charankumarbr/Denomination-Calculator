@@ -1,8 +1,8 @@
 package `in`.phoenix.denomcalc.ui.stored
 
 import `in`.phoenix.denomcalc.R
-import `in`.phoenix.denomcalc.adapter.OnSavedDenoClickListener
 import `in`.phoenix.denomcalc.adapter.SavedDenominationAdapter
+import `in`.phoenix.denomcalc.adapter.listener.OnSavedDenoClickListener
 import `in`.phoenix.denomcalc.model.Denomination
 import `in`.phoenix.denomcalc.repository.DataState
 import `in`.phoenix.denomcalc.util.gone
@@ -25,6 +25,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
+
+    private val LOG_TAG = "StoredActivity"
 
     private val storedViewModel: StoredViewModel by viewModels()
 
@@ -50,8 +52,8 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
     }
 
     private fun subscribeObservers() {
-        storedViewModel.getSavedDenomination.observe(this, {
-            when (it) {
+        storedViewModel.getSavedDenomination.observe(this, { dataState ->
+            when (dataState) {
                 is DataState.Loading -> {
                     asdRvSaved.gone()
                     asdPbLoading.visible()
@@ -59,9 +61,9 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
 
                 is DataState.Success -> {
                     asdPbLoading.gone()
-                    var allSaved = it.data
+                    var allSaved = dataState.data
                     if (allSaved.isEmpty()) {
-                        Toast.makeText(this, "Zero saved items to display", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.zero_saved_items), Toast.LENGTH_SHORT)
                             .show()
                         finish()
 
@@ -73,7 +75,8 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
 
                 is DataState.Error -> {
                     asdPbLoading.gone()
-                    Toast.makeText(this, "Unable to display", Toast.LENGTH_SHORT).show()
+                    dataState.exception?.printStackTrace()
+                    Toast.makeText(this, getString(R.string.unable_to_display), Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
@@ -83,10 +86,10 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
     override fun onSavedDenoClick(denomination: Denomination, position: Int) {
         if (!isFinishing) {
             supportFragmentManager.beginTransaction()
-                .add(StoredFragment.newInstance(denomination), "StoredFragment")
+                .add(StoredFragment.newInstance(denomination), StoredFragment.FRAGMENT_TAG)
                 .commitAllowingStateLoss()
         }
-        Log.d("StoredAc", "Data: ${denomination.description} Pos: $position")
+        Log.d(LOG_TAG, "Data: ${denomination.description} :: Pos: $position")
     }
 
     companion object {

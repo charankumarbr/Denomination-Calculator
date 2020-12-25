@@ -1,4 +1,4 @@
-package `in`.phoenix.denomcalc.adapter
+package `in`.phoenix.denomcalc.adapter.listener
 
 import `in`.phoenix.denomcalc.model.Denomination
 

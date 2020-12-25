@@ -1,6 +1,8 @@
 package `in`.phoenix.denomcalc.ui.home
 
 import `in`.phoenix.denomcalc.model.Denomination
+import `in`.phoenix.denomcalc.model.DenominationConstants
+import `in`.phoenix.denomcalc.model.LineItem
 import `in`.phoenix.denomcalc.model.ShareData
 import `in`.phoenix.denomcalc.repository.DataState
 import `in`.phoenix.denomcalc.repository.MainRepository
@@ -46,4 +48,24 @@ constructor(
                 }.launchIn(viewModelScope)
         }
     }
+
+    val lineItems: MutableList<LineItem>
+        get() {
+            return mutableListOf(
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_2000, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_500, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_200, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_100, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_50, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_20, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_10, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_5, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_2, 0),
+                LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_1, 0),
+                LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_10, 0),
+                LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_5, 0),
+                LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_2, 0),
+                LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_1, 0)
+            )
+        }
 }

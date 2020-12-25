@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Denomination Calculator</string>
+    <string name="saved">Saved</string>
+    <string name="unable_to_save">Unable to save</string>
+    <string name="nothing_to_share">Nothing to share</string>
+    <string name="clear">Clear</string>
+    <string name="confirm_clear_all">Are you sure you want to clear all inputs?</string>
+    <string name="zero_saved_items">Zero saved items to display</string>
+    <string name="unable_to_display">Unable to display</string>
+    <string name="share_denomination">Share Denomination</string>
 </resources>

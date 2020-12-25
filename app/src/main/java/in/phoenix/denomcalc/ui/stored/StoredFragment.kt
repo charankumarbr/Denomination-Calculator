@@ -59,7 +59,7 @@ class StoredFragment: DialogFragment() {
                 shareIntent.putExtra(Intent.EXTRA_TEXT, denomination?.description)
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, denomination?.totalValueForShare)
                 shareIntent.type = "text/plain"
-                startActivity(Intent.createChooser(shareIntent, "Share Denomination"))
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_denomination)))
             }
         }
     }
@@ -74,5 +74,7 @@ class StoredFragment: DialogFragment() {
         }
 
         const val DATA_DENOMINATION = "DENOMINATION_DATA"
+
+        const val FRAGMENT_TAG = "StoredFragment"
     }
 }

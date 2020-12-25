@@ -50,6 +50,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
 
+    private val LOG_TAG = "MainActivity"
+
     private var focusedQty: EditText? = null
     private var focusedLineTotal: TextView? = null
     private var focusedLineDenomination = 0
@@ -114,35 +116,21 @@ class MainActivity : AppCompatActivity() {
         amTvShare.setOnClickListener(clickListener)
         amTvSave.setOnClickListener(clickListener)
 
-        lineItems = mutableListOf(
-            LineItem(TYPE_NOTE, DENO_2000, 0),
-            LineItem(TYPE_NOTE, DENO_500, 0),
-            LineItem(TYPE_NOTE, DENO_200, 0),
-            LineItem(TYPE_NOTE, DENO_100, 0),
-            LineItem(TYPE_NOTE, DENO_50, 0),
-            LineItem(TYPE_NOTE, DENO_20, 0),
-            LineItem(TYPE_NOTE, DENO_10, 0),
-            LineItem(TYPE_NOTE, DENO_5, 0),
-            LineItem(TYPE_NOTE, DENO_2, 0),
-            LineItem(TYPE_NOTE, DENO_1, 0),
-            LineItem(TYPE_COIN, DENO_10, 0),
-            LineItem(TYPE_COIN, DENO_5, 0),
-            LineItem(TYPE_COIN, DENO_2, 0),
-            LineItem(TYPE_COIN, DENO_1, 0)
-        )
+        lineItems = mainViewModel.lineItems
     }
 
     private fun subscribeObservers() {
-        mainViewModel.saveDenomination.observe(this, {
-            when (it) {
+        mainViewModel.saveDenomination.observe(this, { dataState ->
+            when (dataState) {
                 is DataState.Success -> {
                     amLayoutLoading.gone()
-                    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
                 }
 
                 is DataState.Error -> {
                     amLayoutLoading.gone()
-                    Toast.makeText(this, "Unable to save", Toast.LENGTH_SHORT).show()
+                    dataState.exception?.printStackTrace()
+                    Toast.makeText(this, getString(R.string.unable_to_save), Toast.LENGTH_SHORT).show()
                 }
 
                 is DataState.Loading -> {
@@ -183,17 +171,19 @@ class MainActivity : AppCompatActivity() {
                     if (amLayoutLoading.visibility == View.GONE) {
                         amLayoutLoading.visible()
                         val shareData = CalcUtil.prepareShareText(lineItems)
-                        Log.d("share data ready", "share")
+                        Log.d(LOG_TAG, "share - share data ready")
+
                         val shareIntent = Intent(ACTION_SEND)
                         shareIntent.putExtra(Intent.EXTRA_TEXT, shareData.message)
                         shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareData.subject)
                         shareIntent.type = "text/plain"
                         startActivity(Intent.createChooser(shareIntent, "Share Denomination"))
+
                         amLayoutLoading.gone()
                     }
 
                 } else {
-                    Toast.makeText(this, "Nothing to share", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.nothing_to_share), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -208,7 +198,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 } else {
-                    Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.nothing_to_share), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -361,64 +351,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun doAllLineTotal() {
-
         var total = CalcUtil.allLineTotal(lineItems)
-        /*if (isValidEntry(tvValue2000.text.toString())) {
-            total += tvValue2000.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue500.text.toString())) {
-            total += tvValue500.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue200.text.toString())) {
-            total += tvValue200.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue100.text.toString())) {
-            total += tvValue100.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue50.text.toString())) {
-            total += tvValue50.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue20.text.toString())) {
-            total += tvValue20.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue10.text.toString())) {
-            total += tvValue10.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue5.text.toString())) {
-            total += tvValue5.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue2.text.toString())) {
-            total += tvValue2.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvValue1.text.toString())) {
-            total += tvValue1.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvCValue10.text.toString())) {
-            total += tvCValue10.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvCValue5.text.toString())) {
-            total += tvCValue5.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvCValue2.text.toString())) {
-            total += tvCValue2.text.toString().toInt()
-        }
-
-        if (isValidEntry(tvCValue1.text.toString())) {
-            total += tvCValue1.text.toString().toInt()
-        }*/
-
         amTvTotalValue.text = total.toString()
     }
 
@@ -430,8 +363,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun confirmClearAll() {
         val alertDialog = AlertDialog.Builder(this)
-            .setTitle("Clear")
-            .setMessage("Are you sure you want to clear all inputs?")
+            .setTitle(getString(R.string.clear))
+            .setMessage(getString(R.string.confirm_clear_all))
             .setPositiveButton("Yes") { dialog, _ ->
                 doClearAll()
                 dialog.dismiss()
