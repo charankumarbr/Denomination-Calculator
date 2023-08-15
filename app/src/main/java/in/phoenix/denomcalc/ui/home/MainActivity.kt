@@ -317,7 +317,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun findLineItem(denoType: Int, deno: Int): LineItem? {
-        return lineItems?.find {
+        return lineItems.find {
             it.denominationType == denoType &&
                     it.lineDenomination == deno
         }

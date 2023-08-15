@@ -64,7 +64,7 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
 
                 is DataState.Success -> {
                     binding.asdPbLoading.gone()
-                    var allSaved = dataState.data
+                    val allSaved = dataState.data
                     if (allSaved.isEmpty()) {
                         Toast.makeText(this, getString(R.string.zero_saved_items), Toast.LENGTH_SHORT)
                             .show()
@@ -78,7 +78,7 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
 
                 is DataState.Error -> {
                     binding.asdPbLoading.gone()
-                    dataState.exception?.printStackTrace()
+                    dataState.exception.printStackTrace()
                     Toast.makeText(this, getString(R.string.unable_to_display), Toast.LENGTH_SHORT).show()
                     finish()
                 }
