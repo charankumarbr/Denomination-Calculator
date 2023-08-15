@@ -781,6 +781,69 @@
                 android:layout_marginTop="@dimen/_32dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutC20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20dp">
+
+                <TextView
+                    android:id="@+id/tvC20"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="20"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:layout_marginStart="@dimen/_12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:gravity="start"/>
+
+                <ImageView
+                    android:id="@+id/ivCTimes20"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_outline_close_24"
+                    app:layout_constraintTop_toBottomOf="@id/tvC20"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="@dimen/_6dp"/>
+
+                <EditText
+                    android:id="@+id/etCQty20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="50dp"
+                    app:layout_constraintStart_toEndOf="@id/tvC20"
+                    app:layout_constraintBottom_toBottomOf="@id/ivCTimes20"
+                    android:paddingStart="@dimen/_6dp"
+                    android:paddingEnd="@dimen/_6dp"
+                    android:layout_marginStart="@dimen/_6dp"
+                    android:inputType="number"
+                    android:textSize="18sp"
+                    android:maxLength="5"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/tvCValue20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="end"
+                    android:layout_marginEnd="@dimen/_12dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/light_gray"
+                android:layout_margin="@dimen/_12dp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutC10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

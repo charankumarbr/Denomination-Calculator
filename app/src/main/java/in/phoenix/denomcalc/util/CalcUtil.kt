@@ -30,7 +30,7 @@ object CalcUtil {
 
     fun allLineTotal(lineItems: MutableList<LineItem>): Int {
         var total = 0
-        lineItems?.forEach {
+        lineItems.forEach {
             total += it.lineDenomination * it.lineQty
         }
         return total

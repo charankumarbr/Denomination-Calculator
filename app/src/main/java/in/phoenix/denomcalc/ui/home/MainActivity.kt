@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             binding.etQty5.onFocusChangeListener = this
             binding.etQty2.onFocusChangeListener = this
             binding.etQty1.onFocusChangeListener = this
+            binding.etCQty20.onFocusChangeListener = this
             binding.etCQty10.onFocusChangeListener = this
             binding.etCQty5.onFocusChangeListener = this
             binding.etCQty2.onFocusChangeListener = this
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity() {
             binding.etQty5.addTextChangedListener(this)
             binding.etQty2.addTextChangedListener(this)
             binding.etQty1.addTextChangedListener(this)
+            binding.etCQty20.addTextChangedListener(this)
             binding.etCQty10.addTextChangedListener(this)
             binding.etCQty5.addTextChangedListener(this)
             binding.etCQty2.addTextChangedListener(this)
@@ -273,6 +275,13 @@ class MainActivity : AppCompatActivity() {
                     focusedLineDenomination = 20
                     focusedLineTotal = binding.tvValue20
                     denoType = TYPE_NOTE
+                    deno = DENO_20
+                }
+
+                binding.etCQty20 -> {
+                    focusedLineDenomination = 20
+                    focusedLineTotal = binding.tvCValue20
+                    denoType = TYPE_COIN
                     deno = DENO_20
                 }
 
