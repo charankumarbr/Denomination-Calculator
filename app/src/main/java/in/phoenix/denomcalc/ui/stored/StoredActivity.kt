@@ -1,21 +1,23 @@
 package `in`.phoenix.denomcalc.ui.stored
 
-import `in`.phoenix.denomcalc.R
-import `in`.phoenix.denomcalc.adapter.SavedDenominationAdapter
-import `in`.phoenix.denomcalc.adapter.listener.OnSavedDenoClickListener
-import `in`.phoenix.denomcalc.model.Denomination
-import `in`.phoenix.denomcalc.repository.DataState
-import `in`.phoenix.denomcalc.util.gone
-import `in`.phoenix.denomcalc.util.visible
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
+import `in`.phoenix.denomcalc.R
+import `in`.phoenix.denomcalc.adapter.SavedDenominationAdapter
+import `in`.phoenix.denomcalc.adapter.listener.OnSavedDenoClickListener
 import `in`.phoenix.denomcalc.databinding.ActivityStoredDenominationsBinding
+import `in`.phoenix.denomcalc.model.Denomination
+import `in`.phoenix.denomcalc.repository.DataState
+import `in`.phoenix.denomcalc.util.gone
+import `in`.phoenix.denomcalc.util.visible
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
@@ -45,6 +47,10 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
         storedViewModel.getSavedDenomination()
         savedDenominationAdapter.setOnSavedDenominationClickListener(this)
         binding.asdRvSaved.adapter = savedDenominationAdapter
+
+        if (savedInstanceState == null) {
+            onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        }
     }
 
     private fun init() {
@@ -101,5 +107,24 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
             val intent = Intent(context, StoredActivity::class.java)
             context.startActivity(intent)
         }
+    }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            finish()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onBackPressedCallback.remove()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

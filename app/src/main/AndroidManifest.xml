@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.phoenix.denomcalc">
+          package="in.phoenix.denomcalc">
 
     <application
         android:name=".DenomCalcApplication"
@@ -20,8 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name="in.phoenix.denomcalc.ui.stored.StoredActivity"
-            android:screenOrientation="userPortrait"
-            android:parentActivityName=".ui.home.MainActivity"
+                  android:screenOrientation="userPortrait"
                   android:exported="false">
         </activity>
     </application>
