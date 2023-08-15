@@ -24,7 +24,7 @@ constructor(
     private val cacheMapper: CacheMapper
 ){
 
-    suspend fun getDenominations(): Flow<DataState<List<Denomination>>> = flow {
+    fun getDenominations(): Flow<DataState<List<Denomination>>> = flow {
         emit(DataState.Loading)
         try {
             val denominations = denominationDao.getDenominations()
@@ -35,7 +35,7 @@ constructor(
         }
     }
 
-    suspend fun saveDenomination(shareData: ShareData): Flow<DataState<Long>> = flow {
+    fun saveDenomination(shareData: ShareData): Flow<DataState<Long>> = flow {
         emit(DataState.Loading)
         try {
             val dbId = denominationDao.insert(DenominationCacheEntity(shareData.message, shareData.subject))
