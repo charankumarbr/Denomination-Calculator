@@ -62,6 +62,7 @@ constructor(
                 LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_5, 0),
                 LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_2, 0),
                 LineItem(DenominationConstants.TYPE_NOTE, DenominationConstants.DENO_1, 0),
+                LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_20, 0),
                 LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_10, 0),
                 LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_5, 0),
                 LineItem(DenominationConstants.TYPE_COIN, DenominationConstants.DENO_2, 0),
