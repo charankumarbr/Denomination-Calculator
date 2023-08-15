@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 } else {
-                    Toast.makeText(this, getString(R.string.nothing_to_share), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.nothing_to_save), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -404,6 +404,7 @@ class MainActivity : AppCompatActivity() {
             binding.etQty5.setText(this)
             binding.etQty2.setText(this)
             binding.etQty1.setText(this)
+            binding.etCQty20.setText(this)
             binding.etCQty10.setText(this)
             binding.etCQty5.setText(this)
             binding.etCQty2.setText(this)
@@ -419,6 +420,7 @@ class MainActivity : AppCompatActivity() {
             binding.tvValue5.text = this
             binding.tvValue2.text = this
             binding.tvValue1.text = this
+            binding.tvCValue20.text = this
             binding.tvCValue10.text = this
             binding.tvCValue5.text = this
             binding.tvCValue2.text = this

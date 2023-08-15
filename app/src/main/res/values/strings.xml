@@ -9,4 +9,5 @@
     <string name="unable_to_display">Unable to display</string>
     <string name="share_denomination">Share Denomination</string>
     <string name="total_">Total:</string>
+    <string name="nothing_to_save">Nothing to save</string>
 </resources>
