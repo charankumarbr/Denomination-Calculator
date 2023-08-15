@@ -1,6 +1,7 @@
 package `in`.phoenix.denomcalc.ui.home
 
 import `in`.phoenix.denomcalc.R
+import `in`.phoenix.denomcalc.databinding.ActivityMainBinding
 import `in`.phoenix.denomcalc.model.DenominationConstants.Companion.DENO_1
 import `in`.phoenix.denomcalc.model.DenominationConstants.Companion.DENO_10
 import `in`.phoenix.denomcalc.model.DenominationConstants.Companion.DENO_100
@@ -40,7 +41,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
@@ -51,6 +51,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
 
     private val LOG_TAG = "MainActivity"
+
+    private lateinit var binding: ActivityMainBinding
 
     private var focusedQty: EditText? = null
     private var focusedLineTotal: TextView? = null
@@ -63,7 +65,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Toast.makeText(this, "App by: Phoenix Apps", Toast.LENGTH_SHORT).show()
         init()
@@ -71,50 +74,50 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        setSupportActionBar(amToolbar)
+        setSupportActionBar(binding.amToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-            amToolbar.overflowIcon?.colorFilter = BlendModeColorFilter(Color.WHITE, BlendMode.SRC_ATOP)
+            binding.amToolbar.overflowIcon?.colorFilter = BlendModeColorFilter(Color.WHITE, BlendMode.SRC_ATOP)
         } else {
-            amToolbar.overflowIcon?.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+            binding.amToolbar.overflowIcon?.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
         }
         with (onQtyFocusListener) {
-            etQty2000.onFocusChangeListener = this
-            etQty500.onFocusChangeListener = this
-            etQty200.onFocusChangeListener = this
-            etQty100.onFocusChangeListener = this
-            etQty50.onFocusChangeListener = this
-            etQty20.onFocusChangeListener = this
-            etQty10.onFocusChangeListener = this
-            etQty5.onFocusChangeListener = this
-            etQty2.onFocusChangeListener = this
-            etQty1.onFocusChangeListener = this
-            etCQty10.onFocusChangeListener = this
-            etCQty5.onFocusChangeListener = this
-            etCQty2.onFocusChangeListener = this
-            etCQty1.onFocusChangeListener = this
+            binding.etQty2000.onFocusChangeListener = this
+            binding.etQty500.onFocusChangeListener = this
+            binding.etQty200.onFocusChangeListener = this
+            binding.etQty100.onFocusChangeListener = this
+            binding.etQty50.onFocusChangeListener = this
+            binding.etQty20.onFocusChangeListener = this
+            binding.etQty10.onFocusChangeListener = this
+            binding.etQty5.onFocusChangeListener = this
+            binding.etQty2.onFocusChangeListener = this
+            binding.etQty1.onFocusChangeListener = this
+            binding.etCQty10.onFocusChangeListener = this
+            binding.etCQty5.onFocusChangeListener = this
+            binding.etCQty2.onFocusChangeListener = this
+            binding.etCQty1.onFocusChangeListener = this
         }
 
         with (onQtyChangeWatcher) {
-            etQty2000.addTextChangedListener(this)
-            etQty500.addTextChangedListener(this)
-            etQty200.addTextChangedListener(this)
-            etQty100.addTextChangedListener(this)
-            etQty50.addTextChangedListener(this)
-            etQty20.addTextChangedListener(this)
-            etQty10.addTextChangedListener(this)
-            etQty5.addTextChangedListener(this)
-            etQty2.addTextChangedListener(this)
-            etQty1.addTextChangedListener(this)
-            etCQty10.addTextChangedListener(this)
-            etCQty5.addTextChangedListener(this)
-            etCQty2.addTextChangedListener(this)
-            etCQty1.addTextChangedListener(this)
+            binding.etQty2000.addTextChangedListener(this)
+            binding.etQty500.addTextChangedListener(this)
+            binding.etQty200.addTextChangedListener(this)
+            binding.etQty100.addTextChangedListener(this)
+            binding.etQty50.addTextChangedListener(this)
+            binding.etQty20.addTextChangedListener(this)
+            binding.etQty10.addTextChangedListener(this)
+            binding.etQty5.addTextChangedListener(this)
+            binding.etQty2.addTextChangedListener(this)
+            binding.etQty1.addTextChangedListener(this)
+            binding.etCQty10.addTextChangedListener(this)
+            binding.etCQty5.addTextChangedListener(this)
+            binding.etCQty2.addTextChangedListener(this)
+            binding.etCQty1.addTextChangedListener(this)
         }
 
-        amTvClear.setOnClickListener(clickListener)
-        amTvShare.setOnClickListener(clickListener)
-        amTvSave.setOnClickListener(clickListener)
+        binding.amTvClear.setOnClickListener(clickListener)
+        binding.amTvShare.setOnClickListener(clickListener)
+        binding.amTvSave.setOnClickListener(clickListener)
 
         lineItems = mainViewModel.lineItems
     }
@@ -123,18 +126,18 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.saveDenomination.observe(this, { dataState ->
             when (dataState) {
                 is DataState.Success -> {
-                    amLayoutLoading.gone()
+                    binding.amLayoutLoading.gone()
                     Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
                 }
 
                 is DataState.Error -> {
-                    amLayoutLoading.gone()
-                    dataState.exception?.printStackTrace()
+                    binding.amLayoutLoading.gone()
+                    dataState.exception.printStackTrace()
                     Toast.makeText(this, getString(R.string.unable_to_save), Toast.LENGTH_SHORT).show()
                 }
 
                 is DataState.Loading -> {
-                    amLayoutLoading.visible()
+                    binding.amLayoutLoading.visible()
                 }
             }
         })
@@ -165,11 +168,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.amTvShare -> {
-                if (!TextUtils.isEmpty(amTvTotalValue.text.toString()) &&
-                    amTvTotalValue.text.toString() != "0") {
+                if (!TextUtils.isEmpty(binding.amTvTotalValue.text.toString()) &&
+                    binding.amTvTotalValue.text.toString() != "0") {
 
-                    if (amLayoutLoading.visibility == View.GONE) {
-                        amLayoutLoading.visible()
+                    if (binding.amLayoutLoading.visibility == View.GONE) {
+                        binding.amLayoutLoading.visible()
                         val shareData = CalcUtil.prepareShareText(lineItems)
                         Log.d(LOG_TAG, "share - share data ready")
 
@@ -179,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                         shareIntent.type = "text/plain"
                         startActivity(Intent.createChooser(shareIntent, "Share Denomination"))
 
-                        amLayoutLoading.gone()
+                        binding.amLayoutLoading.gone()
                     }
 
                 } else {
@@ -188,11 +191,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.amTvSave -> {
-                if (!TextUtils.isEmpty(amTvTotalValue.text.toString()) &&
-                    amTvTotalValue.text.toString() != "0") {
+                if (!TextUtils.isEmpty(binding.amTvTotalValue.text.toString()) &&
+                    binding.amTvTotalValue.text.toString() != "0") {
 
-                    if (amLayoutLoading.visibility == View.GONE) {
-                        amLayoutLoading.visible()
+                    if (binding.amLayoutLoading.visibility == View.GONE) {
+                        binding.amLayoutLoading.visible()
                         val shareData = CalcUtil.prepareShareText(lineItems)
                         mainViewModel.saveDenomination(shareData)
                     }
@@ -210,100 +213,100 @@ class MainActivity : AppCompatActivity() {
             var denoType = -1
             var deno = -1
             when (qtyView) {
-                etQty1 -> {
+                binding.etQty1 -> {
                     focusedLineDenomination = 1
-                    focusedLineTotal = tvValue1
+                    focusedLineTotal = binding.tvValue1
                     denoType = TYPE_NOTE
                     deno = DENO_1
                 }
 
-                etCQty1 -> {
+                binding.etCQty1 -> {
                     focusedLineDenomination = 1
-                    focusedLineTotal = tvCValue1
+                    focusedLineTotal = binding.tvCValue1
                     denoType = TYPE_COIN
                     deno = DENO_1
                 }
 
-                etQty2 -> {
+                binding.etQty2 -> {
                     focusedLineDenomination = 2
-                    focusedLineTotal = tvValue2
+                    focusedLineTotal = binding.tvValue2
                     denoType = TYPE_NOTE
                     deno = DENO_2
                 }
 
-                etCQty2 -> {
+                binding.etCQty2 -> {
                     focusedLineDenomination = 2
-                    focusedLineTotal = tvCValue2
+                    focusedLineTotal = binding.tvCValue2
                     denoType = TYPE_COIN
                     deno = DENO_2
                 }
 
-                etQty5 -> {
+                binding.etQty5 -> {
                     focusedLineDenomination = 5
-                    focusedLineTotal = tvValue5
+                    focusedLineTotal = binding.tvValue5
                     denoType = TYPE_NOTE
                     deno = DENO_5
                 }
 
-                etCQty5 -> {
+                binding.etCQty5 -> {
                     focusedLineDenomination = 5
-                    focusedLineTotal = tvCValue5
+                    focusedLineTotal = binding.tvCValue5
                     denoType = TYPE_COIN
                     deno = DENO_5
                 }
 
-                etQty10 -> {
+                binding.etQty10 -> {
                     focusedLineDenomination = 10
-                    focusedLineTotal = tvValue10
+                    focusedLineTotal = binding.tvValue10
                     denoType = TYPE_NOTE
                     deno = DENO_10
                 }
 
-                etCQty10 -> {
+                binding.etCQty10 -> {
                     focusedLineDenomination = 10
-                    focusedLineTotal = tvCValue10
+                    focusedLineTotal = binding.tvCValue10
                     denoType = TYPE_COIN
                     deno = DENO_10
                 }
 
-                etQty20 -> {
+                binding.etQty20 -> {
                     focusedLineDenomination = 20
-                    focusedLineTotal = tvValue20
+                    focusedLineTotal = binding.tvValue20
                     denoType = TYPE_NOTE
                     deno = DENO_20
                 }
 
-                etQty50 -> {
+                binding.etQty50 -> {
                     focusedLineDenomination = 50
-                    focusedLineTotal = tvValue50
+                    focusedLineTotal = binding.tvValue50
                     denoType = TYPE_NOTE
                     deno = DENO_50
                 }
 
-                etQty100 -> {
+                binding.etQty100 -> {
                     focusedLineDenomination = 100
-                    focusedLineTotal = tvValue100
+                    focusedLineTotal = binding.tvValue100
                     denoType = TYPE_NOTE
                     deno = DENO_100
                 }
 
-                etQty200 -> {
+                binding.etQty200 -> {
                     focusedLineDenomination = 200
-                    focusedLineTotal = tvValue200
+                    focusedLineTotal = binding.tvValue200
                     denoType = TYPE_NOTE
                     deno = DENO_200
                 }
 
-                etQty500 -> {
+                binding.etQty500 -> {
                     focusedLineDenomination = 500
-                    focusedLineTotal = tvValue500
+                    focusedLineTotal = binding.tvValue500
                     denoType = TYPE_NOTE
                     deno = DENO_500
                 }
 
-                etQty2000 -> {
+                binding.etQty2000 -> {
                     focusedLineDenomination = 2000
-                    focusedLineTotal = tvValue2000
+                    focusedLineTotal = binding.tvValue2000
                     denoType = TYPE_NOTE
                     deno = DENO_2000
                 }
@@ -322,11 +325,11 @@ class MainActivity : AppCompatActivity() {
 
     private val onQtyChangeWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+            //-- purposefully left empty --//
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+            //-- purposefully left empty --//
         }
 
         override fun afterTextChanged(s: Editable?) {
@@ -351,12 +354,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun doAllLineTotal() {
-        var total = CalcUtil.allLineTotal(lineItems)
-        amTvTotalValue.text = total.toString()
+        val total = CalcUtil.allLineTotal(lineItems)
+        binding.amTvTotalValue.text = total.toString()
     }
 
     private fun clearAll() {
-        if (!TextUtils.isEmpty(amTvTotalValue.text.toString())) {
+        if (!TextUtils.isEmpty(binding.amTvTotalValue.text.toString())) {
             confirmClearAll()
         }
     }
@@ -382,38 +385,38 @@ class MainActivity : AppCompatActivity() {
         val zeroString = ""
         focusedQty?.clearFocus()
         with (zeroString) {
-            etQty2000.setText(this)
-            etQty500.setText(this)
-            etQty200.setText(this)
-            etQty100.setText(this)
-            etQty50.setText(this)
-            etQty20.setText(this)
-            etQty10.setText(this)
-            etQty5.setText(this)
-            etQty2.setText(this)
-            etQty1.setText(this)
-            etCQty10.setText(this)
-            etCQty5.setText(this)
-            etCQty2.setText(this)
-            etCQty1.setText(this)
+            binding.etQty2000.setText(this)
+            binding.etQty500.setText(this)
+            binding.etQty200.setText(this)
+            binding.etQty100.setText(this)
+            binding.etQty50.setText(this)
+            binding.etQty20.setText(this)
+            binding.etQty10.setText(this)
+            binding.etQty5.setText(this)
+            binding.etQty2.setText(this)
+            binding.etQty1.setText(this)
+            binding.etCQty10.setText(this)
+            binding.etCQty5.setText(this)
+            binding.etCQty2.setText(this)
+            binding.etCQty1.setText(this)
 
-            tvValue2000.text = this
-            tvValue500.text = this
-            tvValue200.text = this
-            tvValue100.text = this
-            tvValue50.text = this
-            tvValue20.text = this
-            tvValue10.text = this
-            tvValue5.text = this
-            tvValue2.text = this
-            tvValue1.text = this
-            tvCValue10.text = this
-            tvCValue5.text = this
-            tvCValue2.text = this
-            tvCValue1.text = this
+            binding.tvValue2000.text = this
+            binding.tvValue500.text = this
+            binding.tvValue200.text = this
+            binding.tvValue100.text = this
+            binding.tvValue50.text = this
+            binding.tvValue20.text = this
+            binding.tvValue10.text = this
+            binding.tvValue5.text = this
+            binding.tvValue2.text = this
+            binding.tvValue1.text = this
+            binding.tvCValue10.text = this
+            binding.tvCValue5.text = this
+            binding.tvCValue2.text = this
+            binding.tvCValue1.text = this
 
-            amTvTotalValue.text = this
-            amTvTotalValueInWords.text = this
+            binding.amTvTotalValue.text = this
+            binding.amTvTotalValueInWords.text = this
 
             lineItems.forEach {
                 it.lineQty = 0

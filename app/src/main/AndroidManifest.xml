@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="in.phoenix.denomcalc.ui.home.MainActivity"
-            android:screenOrientation="userPortrait">
+                  android:screenOrientation="userPortrait"
+                  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +21,8 @@
         </activity>
         <activity android:name="in.phoenix.denomcalc.ui.stored.StoredActivity"
             android:screenOrientation="userPortrait"
-            android:parentActivityName=".ui.home.MainActivity">
+            android:parentActivityName=".ui.home.MainActivity"
+                  android:exported="false">
         </activity>
     </application>
 

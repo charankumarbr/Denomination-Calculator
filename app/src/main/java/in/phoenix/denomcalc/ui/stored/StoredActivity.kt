@@ -15,7 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_stored_denominations.*
+import `in`.phoenix.denomcalc.databinding.ActivityStoredDenominationsBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
@@ -28,6 +28,8 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
 
     private val LOG_TAG = "StoredActivity"
 
+    private lateinit var binding: ActivityStoredDenominationsBinding
+
     private val storedViewModel: StoredViewModel by viewModels()
 
     @Inject
@@ -35,32 +37,33 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stored_denominations)
+        binding = ActivityStoredDenominationsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         init()
         subscribeObservers()
         storedViewModel.getSavedDenomination()
         savedDenominationAdapter.setOnSavedDenominationClickListener(this)
-        asdRvSaved.adapter = savedDenominationAdapter
+        binding.asdRvSaved.adapter = savedDenominationAdapter
     }
 
     private fun init() {
-        setSupportActionBar(asdToolbar)
+        setSupportActionBar(binding.asdToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24)
     }
 
     private fun subscribeObservers() {
-        storedViewModel.getSavedDenomination.observe(this, { dataState ->
+        storedViewModel.getSavedDenomination.observe(this) { dataState ->
             when (dataState) {
                 is DataState.Loading -> {
-                    asdRvSaved.gone()
-                    asdPbLoading.visible()
+                    binding.asdRvSaved.gone()
+                    binding.asdPbLoading.visible()
                 }
 
                 is DataState.Success -> {
-                    asdPbLoading.gone()
+                    binding.asdPbLoading.gone()
                     var allSaved = dataState.data
                     if (allSaved.isEmpty()) {
                         Toast.makeText(this, getString(R.string.zero_saved_items), Toast.LENGTH_SHORT)
@@ -69,18 +72,18 @@ class StoredActivity: AppCompatActivity(), OnSavedDenoClickListener {
 
                     } else {
                         savedDenominationAdapter.submitList(allSaved)
-                        asdRvSaved.visible()
+                        binding.asdRvSaved.visible()
                     }
                 }
 
                 is DataState.Error -> {
-                    asdPbLoading.gone()
+                    binding.asdPbLoading.gone()
                     dataState.exception?.printStackTrace()
                     Toast.makeText(this, getString(R.string.unable_to_display), Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
-        })
+        }
     }
 
     override fun onSavedDenoClick(denomination: Denomination, position: Int) {

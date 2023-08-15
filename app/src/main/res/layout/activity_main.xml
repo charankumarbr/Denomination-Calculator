@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:layout_marginStart="@dimen/_12dp"/>
     </androidx.appcompat.widget.Toolbar>
 
@@ -35,7 +35,7 @@
             android:id="@+id/amTotalValueLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total:"
+            android:text="@string/total_"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:layout_marginStart="@dimen/_20dp"
@@ -48,12 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="21sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/amTotalValueLabel"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/_20dp"
             android:layout_marginTop="@dimen/_12dp"
-            android:gravity="end"
-            android:layout_marginEnd="@dimen/_20dp"/>
+            android:layout_marginEnd="@dimen/_20dp"
+            tools:text="1000"/>
 
         <TextView
             android:id="@+id/amTvTotalValueInWords"
@@ -90,7 +91,9 @@
             android:textColor="@android:color/white"
             android:gravity="center"
             android:textSize="17sp"
-            android:layout_marginStart="@dimen/_20dp"/>
+            android:layout_marginStart="@dimen/_8dp"
+            android:paddingStart="@dimen/_12dp"
+            android:paddingEnd="@dimen/_16dp"/>
 
         <TextView
             android:id="@+id/amTvClear"
@@ -110,8 +113,8 @@
             android:id="@+id/amTvShare"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintStart_toEndOf="@id/amTvSave"
-            app:layout_constraintEnd_toStartOf="@id/amTvClear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="Share"
@@ -124,12 +127,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/amLayoutTotal"
         app:layout_constraintBottom_toTopOf="@id/amLayoutOptions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/_12dp"
         android:layout_marginStart="@dimen/_12dp"
         android:layout_marginEnd="@dimen/_12dp"

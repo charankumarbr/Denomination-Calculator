@@ -17,7 +17,7 @@ import javax.inject.Inject
 class SavedDenominationAdapter
 @Inject
 constructor() : ListAdapter<Denomination, SavedDenoViewHolder>(
-    Denomination.Companion.DenominationDiffCallback()
+    Denomination.CREATOR.DenominationDiffCallback()
 ) {
 
     private var onSavedDenoClickListener: OnSavedDenoClickListener? = null
